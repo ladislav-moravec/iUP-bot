@@ -40,12 +40,35 @@ try:
     # Wait for the new page to load
     time.sleep(2)
 
-    # Click the link using the specified XPath
+    # Click the link with the provided XPath
     target_link = driver.find_element(By.XPATH, "/html/body/div[1]/div[6]/div/div/p[4]/a")
     target_link.click()
 
-    # Wait to see the result of the click action
-    time.sleep(1900)
+    # Wait for the new page to load after the click
+    time.sleep(3)
+
+    # Click the 'Studovat oblast legislativy ČNB' button
+    study_button = driver.find_element(By.XPATH, "//a[@class='spustitS' and @data-id='55887']")
+    study_button.click()
+
+    # Wait for the study page to load
+    time.sleep(3)
+
+    # Find the radio button with class 'unspecified correct'
+    correct_radio = driver.find_element(By.XPATH, "//input[@class='unspecified correct' and @value='2']")
+
+    # Locate the text associated with the radio button (assume it's in a label or near the radio button)
+    # Usually, the associated text for radio buttons is within a label or adjacent element
+    correct_label = driver.find_element(By.XPATH, f"//label[@for='{correct_radio.get_attribute('id')}']")
+
+    # Print the associated text for the correct answer
+    print(f"Correct answer text: {correct_label.text}")
+
+    # Optional: You can select the correct radio button if required
+    correct_radio.click()
+
+    # Wait to see the result of the action
+    time.sleep(5)
 
 finally:
     # Close the browser
