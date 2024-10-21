@@ -98,6 +98,16 @@ try:
             label.click()  # Click the label to select the associated radio button
             break  # Exit the loop after clicking the correct label
     #//####### part to get correct answer from variable saved
+    #########Select correct answer
+    # Use WebDriverWait to ensure the button is present
+    submit_button = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "//button[@type='submit' and contains(@class, 'btn-success')]"))
+    )
+
+    # Use JavaScript to click the button
+    driver.execute_script("arguments[0].click();", submit_button)
+
+    #//########Select correct answer
 
 
 
