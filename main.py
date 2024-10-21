@@ -69,7 +69,7 @@ try:
     ask_button.click()
 
     # Wait to see the result of the action
-    time.sleep(500
+    time.sleep(500)
 
 finally:
     # Close the browser
