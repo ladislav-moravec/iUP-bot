@@ -54,48 +54,22 @@ try:
     # Wait for the study page to load
     time.sleep(3)
 
-    # Find the correct radio button's label and get its text
+    # Find the radio button with class 'unspecified correct' but do not click it
     correct_radio = driver.find_element(By.XPATH, "//input[@class='unspecified correct' and @value='2']")
-    correct_label_text = driver.find_element(By.XPATH, f"//label[@for='{correct_radio.get_attribute('id')}']").text
-    print(f"Correct answer text: {correct_label_text}")
 
+    # Locate the text associated with the radio button (assume it's in a label or near the radio button)
+    correct_label = driver.find_element(By.XPATH, f"//label[@for='{correct_radio.get_attribute('id')}']")
 
-    def click_ask_question_button(driver):
-        try:
-            # Find the "Položit otázku" button using its attributes
-            ask_button = driver.find_element(By.XPATH,
-                                             "//a[@class='btn btn-success btn-block spustitS' and @data-learn='0' and @data-id='55887']")
+    # Print the associated text for the correct answer
+    print(f"Correct answer text: {correct_label.text}")
 
-            # Click the button
-            ask_button.click()
-            print("Successfully clicked the 'Položit otázku' button.")
-        except Exception as e:
-            print(f"An error occurred while trying to click the button: {e}")
-
-
-    click_ask_question_button(driver)
-
-    # Find all labels for radio buttons
-    all_labels = driver.find_elements(By.XPATH, "//label[starts-with(@for, 'Otazka')]")
-    time.sleep(3)
-    # Iterate over each label, compare its text, and if it matches the correct answer, click the label
-    for label in all_labels:
-        time.sleep(1)
-        if label.text.strip() == correct_label_text.strip():
-            # Click the label (since labels are clickable)
-            label.click()
-            print(f"Clicked radio button for: {label.text}")
-            break
-
-    # Wait for a short time before submitting
-    time.sleep(2)
-
-    # Find the "Vyhodnotit" button and click it
-    submit_button = driver.find_element(By.XPATH, "//button[@type='submit' and contains(text(),'Vyhodnotit')]")
-    submit_button.click()
+    # Find the 'Položit otázku' button by its class and attributes, and click it
+    ask_button = driver.find_element(By.XPATH,
+                                     "//a[@class='btn btn-success btn-block spustitS' and @data-learn='0' and @data-id='55887']")
+    ask_button.click()
 
     # Wait to see the result of the action
-    time.sleep(500)
+    time.sleep(5)
 
 finally:
     # Close the browser
