@@ -4,6 +4,8 @@ from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
 from webdriver_manager.firefox import GeckoDriverManager
 import time
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 # Set up Firefox options (if needed)
 firefox_options = Options()
@@ -54,9 +56,10 @@ try:
     # Wait for the study page to load
     time.sleep(3)
 
-    # Find the radio button with class 'unspecified correct'
-    correct_radio = driver.find_element(By.XPATH, "//input[@class='unspecified correct' and @value='2']")
-
+    # Wait for the radio button to be present
+    correct_radio = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.XPATH, "//input[@class='unspecified correct']"))
+    )
     # Locate the text associated with the radio button (assume it's in a label or near the radio button)
     # Usually, the associated text for radio buttons is within a label or adjacent element
     correct_label = driver.find_element(By.XPATH, f"//label[@for='{correct_radio.get_attribute('id')}']")
@@ -65,7 +68,7 @@ try:
     print(f"Correct answer text: {correct_label.text}")
 
     # Optional: You can select the correct radio button if required
-    correct_radio.click()
+    #correct_radio.click()
 
     # Wait to see the result of the action
     time.sleep(5)
