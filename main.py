@@ -59,11 +59,28 @@ try:
     correct_label_text = driver.find_element(By.XPATH, f"//label[@for='{correct_radio.get_attribute('id')}']").text
     print(f"Correct answer text: {correct_label_text}")
 
+
+    def click_ask_question_button(driver):
+        try:
+            # Find the "Položit otázku" button using its attributes
+            ask_button = driver.find_element(By.XPATH,
+                                             "//a[@class='btn btn-success btn-block spustitS' and @data-learn='0' and @data-id='55887']")
+
+            # Click the button
+            ask_button.click()
+            print("Successfully clicked the 'Položit otázku' button.")
+        except Exception as e:
+            print(f"An error occurred while trying to click the button: {e}")
+
+
+    click_ask_question_button(driver)
+
     # Find all labels for radio buttons
     all_labels = driver.find_elements(By.XPATH, "//label[starts-with(@for, 'Otazka')]")
-
+    time.sleep(3)
     # Iterate over each label, compare its text, and if it matches the correct answer, click the label
     for label in all_labels:
+        time.sleep(1)
         if label.text.strip() == correct_label_text.strip():
             # Click the label (since labels are clickable)
             label.click()
