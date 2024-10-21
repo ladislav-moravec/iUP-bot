@@ -71,7 +71,38 @@ try:
     #correct_radio.click()
 
     # Wait to see the result of the action
-    time.sleep(5)
+    time.sleep(1)
+
+    # Use WebDriverWait to ensure the button is present
+    question_button = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, "//a[contains(@class, 'spustitS') and text()='Položit otázku']"))
+    )
+
+    # Click the button
+    question_button.click()
+    time.sleep(1)
+
+    ######## part to get correct answer from variable saved
+    # Assume 'correct_label_text' holds the correct answer text you want to match
+    correct_label_text = "Hrubé nominální."  # Example value; replace with the actual text as needed
+
+    # Use WebDriverWait to find all relevant labels
+    labels = WebDriverWait(driver, 10).until(
+        EC.presence_of_all_elements_located((By.XPATH, "//label[starts-with(@for, 'Otazka_')]"))
+    )
+
+    # Iterate through the labels to find the correct one and click it
+    for label in labels:
+        if label.text == correct_label_text:
+            print(f"Found correct label: {label.text}")
+            label.click()  # Click the label to select the associated radio button
+            break  # Exit the loop after clicking the correct label
+    #//####### part to get correct answer from variable saved
+
+
+
+
+    time.sleep(500)
 
 finally:
     # Close the browser
