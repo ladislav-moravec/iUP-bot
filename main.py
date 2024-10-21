@@ -54,32 +54,18 @@ try:
     # Wait for the study page to load
     time.sleep(3)
 
-    # Find the correct radio button and get its associated label text
+    # Find the radio button with class 'unspecified correct'
     correct_radio = driver.find_element(By.XPATH, "//input[@class='unspecified correct' and @value='2']")
-    correct_label_text = driver.find_element(By.XPATH, f"//label[@for='{correct_radio.get_attribute('id')}']").text
-    print(f"Correct answer text: {correct_label_text}")
 
-    # Find all 4 labels
-    all_labels = driver.find_elements(By.XPATH, "//label[starts-with(@for, 'Otazka')]")
+    # Locate the text associated with the radio button (assume it's in a label or near the radio button)
+    # Usually, the associated text for radio buttons is within a label or adjacent element
+    correct_label = driver.find_element(By.XPATH, f"//label[@for='{correct_radio.get_attribute('id')}']")
 
-    # Iterate over each label, compare its text, and if it matches the correct answer, click the corresponding radio button
-    for label in all_labels:
-        if label.text.strip() == correct_label_text.strip():
-            # Get the 'for' attribute value to find the corresponding radio button
-            radio_button_id = label.get_attribute("for")
-            corresponding_radio = driver.find_element(By.ID, radio_button_id)
+    # Print the associated text for the correct answer
+    print(f"Correct answer text: {correct_label.text}")
 
-            # Click the matching radio button
-            corresponding_radio.click()
-            print(f"Clicked radio button for: {label.text}")
-            break
-
-    # Wait for a short time before submitting
-    time.sleep(2)
-
-    # Find the "Vyhodnotit" button and click it
-    submit_button = driver.find_element(By.XPATH, "//button[@type='submit' and contains(text(),'Vyhodnotit')]")
-    submit_button.click()
+    # Optional: You can select the correct radio button if required
+    correct_radio.click()
 
     # Wait to see the result of the action
     time.sleep(5)
