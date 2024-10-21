@@ -54,23 +54,19 @@ try:
     # Wait for the study page to load
     time.sleep(3)
 
-    # Find the correct radio button and get its associated label text
+    # Find the correct radio button's label and get its text
     correct_radio = driver.find_element(By.XPATH, "//input[@class='unspecified correct' and @value='2']")
     correct_label_text = driver.find_element(By.XPATH, f"//label[@for='{correct_radio.get_attribute('id')}']").text
     print(f"Correct answer text: {correct_label_text}")
 
-    # Find all 4 labels
+    # Find all labels for radio buttons
     all_labels = driver.find_elements(By.XPATH, "//label[starts-with(@for, 'Otazka')]")
 
-    # Iterate over each label, compare its text, and if it matches the correct answer, click the corresponding radio button
+    # Iterate over each label, compare its text, and if it matches the correct answer, click the label
     for label in all_labels:
         if label.text.strip() == correct_label_text.strip():
-            # Get the 'for' attribute value to find the corresponding radio button
-            radio_button_id = label.get_attribute("for")
-            corresponding_radio = driver.find_element(By.ID, radio_button_id)
-
-            # Click the matching radio button
-            corresponding_radio.click()
+            # Click the label (since labels are clickable)
+            label.click()
             print(f"Clicked radio button for: {label.text}")
             break
 
@@ -82,7 +78,7 @@ try:
     submit_button.click()
 
     # Wait to see the result of the action
-    time.sleep(5)
+    time.sleep(500)
 
 finally:
     # Close the browser
